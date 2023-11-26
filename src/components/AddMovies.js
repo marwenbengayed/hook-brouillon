@@ -1,42 +1,40 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import shortid from "shortid";
 
 
-let nextMovie=0
-function AddMovies(){
-    const [posterURL, setPosterURL ]=useState('');
-    const [title, setTitle]= useState('');
-    const [rating,setRating]=useState ('');
-    const [description,setDescription]= useState ('');
-    const [movie,setMovie]=useState('');
-    return (
-        <>
-        <input
-        placeholder="PosterUrl here"
-        value={posterURL}
-        onChange={(e)=> setPosterURL(e.target.value)}
-/>
-<input
-placeholder="enter title"
-value={title}
-onChange={(e)=>setTitle(e.target.value)}/>      
-<input
-placeholder="rate here"
-value={rating}
-onChange={(e)=>setRating(e.target.value)}/>
-<input
-placeholder="description here"
-value={description}
-onChange={(e)=>setDescription(e.target.value)}/>
-   <button onClick={()=>{
-        setMovie ([...movie,nextMovie=nextMovie++, posterURL={posterURL}, title={title}, rating={rating}, description={description}
-        ]);
-    }}>Add movie</button>
-<ul>
-    <li>{setMovie}</li>
-</ul>
-    </>
+const AddMovies = (props) => {
+    const [text, setText]= useState("");
+    const handleSubmit= (e) =>{
+        e.preventDefault();
+        props.onSubmit({
+            id: shortid.generate(),
+            text:text,
+            complete:false,
+        })
+    };
+    const handleChangeTitle = (e) =>{
+        setText(e.target.value)}
+        const handleChangePosterURL= (e) =>{
+            setText(e.target.value)
+}
+const handleChangeDescription= (e) =>{
+    setText(e.target.value)
+}
+const handleChangeRate= (e) =>{
+    setText(e.target.value)
+}
+  return (
+    <div>
+        <form onSubmit={handleSubmit}>
+            <input className='input-field' type='text' onChange={handleChangeTitle} value={text} placeholder="title here"/>
+            <input className='input-field' type='text' onChange={handleChangePosterURL} value={text} placeholder="posterURL here"/>
+            <input className='input-field' type='text' onChange={handleChangeDescription} value={text} placeholder="description here"/>
+            <input className='input-field' type='text' onChange={handleChangeRate} value={text} placeholder="rate here"/>
+            <button className='btn' onClick={handleSubmit}>Add Movie</button>
+        </form>
 
- 
-    );
-};
-export default AddMovies;
+    </div>
+  )
+}
+
+export default AddMovies
